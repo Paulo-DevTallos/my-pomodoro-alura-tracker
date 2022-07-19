@@ -2,55 +2,38 @@
   <div class="box">
     <div class="columns"> 
       <div class="columns is-8" role="form" aria-label="Formulário para criação de uma nova tarefa">
-        <input type="text" class="input" placeholder="Qual tarefa você deseja iniciar?">
+        <input type="text" v-model="description" class="input" placeholder="Qual tarefa você deseja iniciar?">
       </div>
       <div class="column">
-        <div class="is-flex is-align-items-center is-justify-content-space-between">
-          <Cronometer :timeInSeconds="timeInSeconds" />
-          <button class="button" @click="startCounter">
-            <span class="icon">
-              <i class="fas fa-play"></i>
-            </span>
-            <span>play</span>
-          </button>
-          <button class="button" @click="finishCounter">
-            <span class="icon">
-              <i class="fas fa-stop"></i>
-            </span>
-            <span>stop</span>
-          </button>
-        </div>
+        <Timer @whenFinishedTimer="finishWork"/>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import Cronometer from "./Cronometer.vue";
+import { defineComponent } from "vue"
+import Timer from './Timer.vue'
 
 export default defineComponent({
   name: "Form",
-  components: { Cronometer },
+  emits: ['whenSaveWorks'],
+  components: {
+    Timer,
+  },
   data() {
     return {
-      timeInSeconds: 0,
-      cronometer: 0
-    };
+      description: '',
+    }
   },
   methods: {
-    startCounter() {
-      this.cronometer = setInterval(() => {
-        this.timeInSeconds++;
-      }, 1000);
-    },
-    finishCounter() {
-      clearInterval(this.cronometer);
-    },
-  },
+    finishWork(currentTime: number): void {
+      this.$emit('whenSaveWorks', {
+        durationInSeconds: currentTime,
+        description: this.description,  
+      })
+      this.description = '' 
+    }
+  }
 })
 </script>
-
-<style scoped>
-  
-</style>
