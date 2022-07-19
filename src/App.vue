@@ -4,19 +4,22 @@
       <SideBar />
     </div>
     <div class="columns is-three-quarter">
-
+      <Form />
+      <!--lista de tarefas-->
     </div>
   </main>
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import SideBar from "./components/SideBar.vue";
-export default {
-    name: "App",
-    components: { SideBar }
-}
-</script>
+import Form from "./components/Form.vue";
 
-<style>
-  @import './assets/base.css';
-</style> 
+export default defineComponent({
+  name: "App",
+  components: { 
+    SideBar, 
+    Form 
+  }
+})
+</script>
