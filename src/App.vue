@@ -1,9 +1,9 @@
 <template>
-  <main class="columns is-gapless is-multiline">
+  <main class="columns is-gapless is-multiline" :class="{ 'dark-mode': dark_mode_activit }">
     <div class="columns is-one-quarter">
-      <SideBar />
+      <SideBar @changedTheme="changeTheme" />
     </div>
-    <div class="columns is-three-quarter">
+    <div class="columns is-three-quarter content">
       <Form @whenSaveWorks="saveWork"/>
       <div class="lista">
         <ToDoList v-for="(todo, index) in todos" :key="index" :todo="todo"/>
@@ -33,7 +33,8 @@ export default defineComponent({
 },
   data() {
     return {
-      todos: [] as IToDo[]
+      todos: [] as IToDo[],
+      dark_mode_activit: false,
     }
   },
   computed: {
@@ -44,7 +45,10 @@ export default defineComponent({
   methods: {
     saveWork(work: IToDo) {
       this.todos.push(work)
-    }
+    },
+    changeTheme(dark_mode_activit: boolean): void {
+      this.dark_mode_activit = dark_mode_activit
+    } 
   }
 })
 </script>
@@ -52,5 +56,18 @@ export default defineComponent({
 <style>
   .lista {
     padding: 1.25rem;
+  }
+
+  main {
+    --bg-primary: #fff;
+    --text-primary: #000;
+  }
+  main.dark-mode {
+    --bg-primary: #2b2b4b;
+    --text-primary: #ddd;
+  }
+
+  .content {
+    background-color: var(--bg-primary);
   }
 </style>

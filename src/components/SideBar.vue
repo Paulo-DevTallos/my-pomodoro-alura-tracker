@@ -3,6 +3,7 @@
     <h1>
       My <span>Pomodoro</span>
     </h1>
+    <button class="button" @click="changeTheme">{{ changeButtonText }}</button>
   </header>
 </template>
 
@@ -10,7 +11,28 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'SideBar,'
+  name: 'SideBar',
+  emits: ['changedTheme'],
+  data() {
+    return {
+      dark_mode_activit: false
+    }
+  },
+  computed: {
+    changeButtonText() {
+      if(this.dark_mode_activit) {
+        return 'Desativar modo escuro'
+      } else {
+        return 'Ativar modo escuro'
+      }
+    }
+  },
+  methods: {
+    changeTheme() {
+      this.dark_mode_activit = !this.dark_mode_activit
+      this.$emit('changedTheme', this.dark_mode_activit)
+    }
+  },
 })
 </script>
 
@@ -21,6 +43,7 @@ export default defineComponent({
     width: 100%;
     height: 100vh;
     padding: 1rem;
+    text-align: center;
   }
 
   .header h1 {

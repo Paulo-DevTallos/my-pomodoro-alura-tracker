@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="display">
     <strong>{{ currentTime }}</strong>
   </section>
 </template>
@@ -22,3 +22,10 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+  .display {
+    color: #fff;
+    background-color: var(--bg-primary);
+  }
+</style>
